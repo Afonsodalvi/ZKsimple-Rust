@@ -1,0 +1,46 @@
+##ZK simple
+
+- para gerar o arquivo zkp_auth precisamos ter o tonic-build em nosso toml e executar o seguinte comendo:
+
+`cargo build`
+
+- para executar o servidor localmente com o arquivo de server.rs ja configurado execute e direcionado no Cargo.toml:
+
+`cargo run --bin server`
+
+- para usar o gRPC instale a extensao chamada gRPC Clicker e configure com o nome que preferir e inderisndo o address de acordo com o arquivo de server.rs: 127.0.0.1:50051 e selecione em Connection type o Proto file e direcione para o arquivo da pasta proto o zkpt_auth.proto
+
+Da forma acima conseguimos testar o servidor e na proxima etapa vamos gerar nosso servico para o cliente se conectar e gerar sua senha e depois termos o processo de verificacao ZKproof:
+
+- No arquivo client.rs temo a conexao com o gRPC clicker e devemos no arquivo Cargo.toml adicionar o bin de client. Assim, podemos executar o seguinte comando:
+obs. inicie o servidor antes para funcionar...
+
+`cargo run --bin client`
+
+Caso nao use  sistema operacional Linux pode executar o projeto utilizando o docker com o seguinte comando:
+
+`docker-compose build zkpserver`
+
+logo em seguida quando for criado seu conteiner e tendo sua image, podemos executar o:
+
+`docker-compose run --rm zkpserver`
+
+Assim, consegue interagir com a aplicacao pelo docker, execute:
+
+`cargo run --bin server --release`
+
+Para utilizar a mesma image do conteiner para rodar o client execute:
+
+`docker container ls`
+
+pegue o id do seu conteiner, por exemplo: 6714ed541c9f
+
+execute o comando:
+
+`docker exec -it 6714ed541c9f /bin/bash`
+
+Agora que estamos conectados ao conteiner que esta sendo executado o servidor podemos rodar o client:
+
+`cargo run --bin client --release`
+
+O repositorio e para fins de estudos sober como utilizar ZKproof e cabe um estudo mais aprofundado.
